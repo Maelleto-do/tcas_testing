@@ -1,12 +1,17 @@
 package tcas; 
-
 import java.util.LinkedList;
 import java.util.Queue;
 import java.util.TimerTask;
 
 import objects.Plane;
 
-public class Listener extends TimerTask {
+/**
+ * Partie écoute du TCAS et analyse d'information
+ * @author Maelle
+ *
+ */
+public class TCASListener extends TimerTask {
+	
 	public static enum LevelAlert {INTRUDER, TA, RA} ;  
 	
     //Liste d'informations percues, taille <= 45
@@ -14,7 +19,7 @@ public class Listener extends TimerTask {
     private Queue<Plane> environmentPlanes = new LinkedList<Plane>(); 
     
     
-    public Listener(Queue<Plane> environmentPlanes) {
+    public TCASListener(Queue<Plane> environmentPlanes) {
 		super();
 		this.environmentPlanes = environmentPlanes;
 	}
@@ -55,15 +60,17 @@ public class Listener extends TimerTask {
     //pas d'alerte auditive
     //losange évidé ou plein, blanc ou bleu
 	private void intruder_alert() {
-		Rendering screen = new Rendering(LevelAlert.INTRUDER); 
-		screen.printOnScreen("losange bleu");
+		TCASRendering screenAndMicro = new TCASRendering(LevelAlert.INTRUDER); 
+		screenAndMicro.printOnScreen("losange bleu");
+		screenAndMicro.vocalMessage(" ");
 	}    
 	
 	//Annonce vocale
 	//Cercle plein orange
 	private void ta_alert() {
-		Rendering screen = new Rendering(LevelAlert.TA); 
-		screen.printOnScreen("Cercle plein orange");
+		TCASRendering screenAndMicro = new TCASRendering(LevelAlert.TA); 
+		screenAndMicro.printOnScreen("Cercle plein orange");
+		screenAndMicro.vocalMessage("Traffic; Traffic");
 	}
 	
 	//Action à effectuer 

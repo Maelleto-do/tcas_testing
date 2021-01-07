@@ -1,5 +1,10 @@
 package objects;
 
+
+/*
+ * 
+ * Description d'un avion avec ses coordonnées
+ */
 public class Plane {
 
 	private int x;

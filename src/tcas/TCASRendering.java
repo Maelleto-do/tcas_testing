@@ -1,13 +1,17 @@
 package tcas;
 
 
-//Rendu visuel et auditif
-public class Rendering {
+/**
+ * Partie affichage du TCAS (sonore et auditif)
+ * @author Maelle
+ *
+ */
+public class TCASRendering {
 	
-	private Listener.LevelAlert alert; 
+	private TCASListener.LevelAlert alert; 
 
 	
-	public Rendering(Listener.LevelAlert alert) {
+	public TCASRendering(TCASListener.LevelAlert alert) {
 		this.alert = alert;
 	}
 
