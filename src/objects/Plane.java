@@ -22,11 +22,17 @@ public class Plane {
 	public void setX(double x) {
 		this.x = x;
 	}
+	
 	public double getY() {
 		return y;
 	}
 	public void setY(double y) {
 		this.y = y;
+	} 
+
+	public void move(double rateX, double rateY) {
+		this.x = this.x + rateX; 
+		this.y = this.y + rateY;
 	} 
 	
 }

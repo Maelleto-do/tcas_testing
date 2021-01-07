@@ -12,6 +12,7 @@ public class TCASRendering {
 
 	
 	public TCASRendering() {
+		this.alert = TCAS.LevelAlert.CC; 
 	}
 
 	public TCAS.LevelAlert getAlert() {

@@ -12,7 +12,7 @@ import objects.Plane;
  */
 public class TCAS extends TimerTask {
 	
-	public static enum LevelAlert {INTRUDER, TA, RA} ;  
+	public static enum LevelAlert {CC, INTRUDER, TA, RA} ;  
 	private TCASAction tcasAction; 
 	private TCASRendering tcasRendering; 
 	
@@ -26,9 +26,12 @@ public class TCAS extends TimerTask {
 		super();
 		this.environmentPlanes = environmentPlanes;
 		this.localPlane = localPlane; 
+		tcasAction = new TCASAction(localPlane); 
+		tcasRendering = new TCASRendering(); 
 	}
 
 	public void run() {
+		System.out.println("Detection en cours ...");
     	this.detect();
     	this.ask();
     }
@@ -84,9 +87,11 @@ public class TCAS extends TimerTask {
 		tcasRendering.printOnScreen("Carré plein rouge");
 		if (detectedPlane.getY() > localPlane.getY()) {
 			tcasRendering.vocalMessage("Descend; Descend");
+			tcasAction.descend(localPlane); 
 		}
 		else {
 			tcasRendering.vocalMessage("Climb; Climb");
+			tcasAction.climb(localPlane); 
 		}
 	}
 
