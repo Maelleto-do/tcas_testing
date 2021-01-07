@@ -6,6 +6,6 @@ package tcas;
  * @author Maelle
  *
  */
-public class TCASActionOnPlane {
+public class TCASAction {
 
 }

@@ -10,18 +10,22 @@ import objects.Plane;
  * @author Maelle
  *
  */
-public class TCASListener extends TimerTask {
+public class TCAS extends TimerTask {
 	
 	public static enum LevelAlert {INTRUDER, TA, RA} ;  
+	private TCASAction tcasAction; 
+	private TCASRendering tcasRendering; 
 	
     //Liste d'informations percues, taille <= 45
     private Queue<Plane> detectedPlanes = new LinkedList<Plane>(); 
     private Queue<Plane> environmentPlanes = new LinkedList<Plane>(); 
+    Plane localPlane; 
     
     
-    public TCASListener(Queue<Plane> environmentPlanes) {
+    public TCAS(Queue<Plane> environmentPlanes, Plane localPlane) {
 		super();
 		this.environmentPlanes = environmentPlanes;
+		this.localPlane = localPlane; 
 	}
 
 	public void run() {
@@ -39,19 +43,19 @@ public class TCASListener extends TimerTask {
     public void ask() {
     	
     	if (!detectedPlanes.isEmpty()) {
-        	Plane p = detectedPlanes.remove();
-        	
+        	Plane detectedPlane = detectedPlanes.remove();
+
         	//Intruder zone
-        	if (p.getX() < 6 &&  -1200 < p.getY() && p.getY() < 1200 ) {
+        	if ( Math.abs(detectedPlane.getX() - localPlane.getX()) < 6 &&  Math.abs(detectedPlane.getY() - localPlane.getY()) < 1200 ) {
         		this.intruder_alert(); 
         	}
         	//TA zone
-        	if (p.getX() < 3.3 &&  -850 < p.getY() && p.getY() < 850 ) {
+        	if (  Math.abs(detectedPlane.getX() - localPlane.getX()) < 3.3 &&  Math.abs(detectedPlane.getY() - localPlane.getY()) < 850 ) {
         		this.ta_alert(); 
         	}
         	//RA zone
-        	if (p.getX() < 2.1 &&  -600 < p.getY() && p.getY() < 600 ) {
-        		this.ra_alert(); 
+        	if (  Math.abs(detectedPlane.getX() - localPlane.getX()) < 2.1 &&  Math.abs(detectedPlane.getY() - localPlane.getY()) < 600 ) {
+        		this.ra_alert(detectedPlane); 
         	}	
     	}
     	
@@ -60,23 +64,30 @@ public class TCASListener extends TimerTask {
     //pas d'alerte auditive
     //losange évidé ou plein, blanc ou bleu
 	private void intruder_alert() {
-		TCASRendering screenAndMicro = new TCASRendering(LevelAlert.INTRUDER); 
-		screenAndMicro.printOnScreen("losange bleu");
-		screenAndMicro.vocalMessage(" ");
+		tcasRendering.setAlert(LevelAlert.INTRUDER); 
+		tcasRendering.printOnScreen("losange bleu");
+		tcasRendering.vocalMessage(" ");
 	}    
 	
 	//Annonce vocale
 	//Cercle plein orange
 	private void ta_alert() {
-		TCASRendering screenAndMicro = new TCASRendering(LevelAlert.TA); 
-		screenAndMicro.printOnScreen("Cercle plein orange");
-		screenAndMicro.vocalMessage("Traffic; Traffic");
+		tcasRendering.setAlert(LevelAlert.TA); 
+		tcasRendering.printOnScreen("Cercle plein orange");
+		tcasRendering.vocalMessage("Traffic; Traffic");
 	}
 	
 	//Action à effectuer 
 	//Carré plein rouge
-	private void ra_alert() {
-		
+	private void ra_alert(Plane detectedPlane) {
+		tcasRendering.setAlert(LevelAlert.RA); 
+		tcasRendering.printOnScreen("Carr� plein rouge");
+		if (detectedPlane.getY() > localPlane.getY()) {
+			tcasRendering.vocalMessage("Descend; Descend");
+		}
+		else {
+			tcasRendering.vocalMessage("Climb; Climb");
+		}
 	}
 
 	public Queue<Plane> getDetectedPlanes() {

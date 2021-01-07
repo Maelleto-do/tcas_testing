@@ -8,10 +8,17 @@ package tcas;
  */
 public class TCASRendering {
 	
-	private TCASListener.LevelAlert alert; 
+	private TCAS.LevelAlert alert; 
 
 	
-	public TCASRendering(TCASListener.LevelAlert alert) {
+	public TCASRendering() {
+	}
+
+	public TCAS.LevelAlert getAlert() {
+		return alert;
+	}
+
+	public void setAlert(TCAS.LevelAlert alert) {
 		this.alert = alert;
 	}
 
