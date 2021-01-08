@@ -16,6 +16,11 @@ public class Plane {
 		this.y = y;
 	}
 	
+	@Override
+	public String toString() {
+		return "Plane [x=" + x + ", y=" + y + "]";
+	}
+
 	public double getX() {
 		return x;
 	}
@@ -30,9 +35,9 @@ public class Plane {
 		this.y = y;
 	} 
 
-	public void move(double rateX, double rateY) {
-		this.x = this.x + rateX; 
-		this.y = this.y + rateY;
+	public void move() {
+
+		
 	} 
 	
 }

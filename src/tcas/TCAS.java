@@ -23,9 +23,9 @@ public class TCAS extends TimerTask {
     public TCAS(Queue<Plane> environmentPlanes, Plane localPlane) {
 		super();
 		this.environmentPlanes = environmentPlanes;
-		this.localPlane = localPlane; 
 		tcasAction = new TCASAction(localPlane); 
 		tcasRendering = new TCASDisplayer(); 
+		this.localPlane = localPlane; 
 	}
 
 	public void run() {
@@ -37,6 +37,7 @@ public class TCAS extends TimerTask {
     public void detect() {
     	if (! environmentPlanes.isEmpty()) {
         	Plane p = environmentPlanes.remove();
+        	System.out.println("avion ; " + p.toString());
         	detectedPlanes.add(p);	
     	}
     }
@@ -45,7 +46,7 @@ public class TCAS extends TimerTask {
     	
     	if (!detectedPlanes.isEmpty()) {
         	Plane detectedPlane = detectedPlanes.remove();
-
+        	
         	//Intruder zone
         	if ( detectedPlane.getX() - localPlane.getX() < 6 &&  Math.abs(detectedPlane.getY() - localPlane.getY()) < 1200 ) {
         		this.intruder_alert(); 
@@ -82,7 +83,7 @@ public class TCAS extends TimerTask {
 	//CarrÃ© plein rouge
 	private void ra_alert(Plane detectedPlane) {
 		tcasRendering.setAlert(LevelAlert.RA); 
-		tcasRendering.printOnScreen("Carré plein rouge");
+		tcasRendering.printOnScreen("Carre plein rouge");
 		if (detectedPlane.getY() > localPlane.getY()) {
 			tcasRendering.vocalMessage("Descend; Descend");
 			tcasAction.descend(); 

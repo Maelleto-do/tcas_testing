@@ -15,11 +15,11 @@ public class TCASAction {
 	}
 
 	public void descend() {
-		TCAS.localPlane.move(-2.5, -2.5);
+		TCAS.localPlane.move();
 	}
 	
 	public void climb() {
-		TCAS.localPlane.move(+2.5, +2.5);
+		TCAS.localPlane.move();
 	}
 
 }
