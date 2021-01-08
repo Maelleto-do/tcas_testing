@@ -1,6 +1,6 @@
 package tcas;
 
-import objects.Plane;
+import externalObjects.Plane;
 
 /**
  * Cette classe permet d'effectuer les actions 
@@ -10,20 +10,16 @@ import objects.Plane;
  */
 public class TCASAction {
 	
-	private Plane localPlane; 
-	
-	
 	public TCASAction(Plane localPlane) {
 		super();
-		this.localPlane = localPlane;
 	}
 
-	public void descend(Plane plane) {
-		plane.move(-2.5, -2.5);
+	public void descend() {
+		TCAS.localPlane.move(-2.5, -2.5);
 	}
 	
-	public void climb(Plane plane) {
-		plane.move(+2.5, +2.5);
+	public void climb() {
+		TCAS.localPlane.move(+2.5, +2.5);
 	}
 
 }

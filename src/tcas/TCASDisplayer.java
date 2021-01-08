@@ -6,12 +6,12 @@ package tcas;
  * @author Maelle
  *
  */
-public class TCASRendering {
+public class TCASDisplayer {
 	
 	private TCAS.LevelAlert alert; 
 
 	
-	public TCASRendering() {
+	public TCASDisplayer() {
 		this.alert = TCAS.LevelAlert.CC; 
 	}
 

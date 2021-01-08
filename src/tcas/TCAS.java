@@ -3,7 +3,7 @@ import java.util.LinkedList;
 import java.util.Queue;
 import java.util.TimerTask;
 
-import objects.Plane;
+import externalObjects.Plane;
 
 /**
  * Partie Ã©coute du TCAS et analyse d'information
@@ -14,12 +14,10 @@ public class TCAS extends TimerTask {
 	
 	public static enum LevelAlert {CC, INTRUDER, TA, RA} ;  
 	private TCASAction tcasAction; 
-	private TCASRendering tcasRendering; 
-	
-    //Liste d'informations percues, taille <= 45
-    private Queue<Plane> detectedPlanes = new LinkedList<Plane>(); 
+	private TCASDisplayer tcasRendering; 
+	private Queue<Plane> detectedPlanes = new LinkedList<Plane>(); 
     private Queue<Plane> environmentPlanes = new LinkedList<Plane>(); 
-    Plane localPlane; 
+    public static Plane localPlane; 
     
     
     public TCAS(Queue<Plane> environmentPlanes, Plane localPlane) {
@@ -27,7 +25,7 @@ public class TCAS extends TimerTask {
 		this.environmentPlanes = environmentPlanes;
 		this.localPlane = localPlane; 
 		tcasAction = new TCASAction(localPlane); 
-		tcasRendering = new TCASRendering(); 
+		tcasRendering = new TCASDisplayer(); 
 	}
 
 	public void run() {
@@ -87,11 +85,11 @@ public class TCAS extends TimerTask {
 		tcasRendering.printOnScreen("Carré plein rouge");
 		if (detectedPlane.getY() > localPlane.getY()) {
 			tcasRendering.vocalMessage("Descend; Descend");
-			tcasAction.descend(localPlane); 
+			tcasAction.descend(); 
 		}
 		else {
 			tcasRendering.vocalMessage("Climb; Climb");
-			tcasAction.climb(localPlane); 
+			tcasAction.climb(); 
 		}
 	}
 

@@ -3,7 +3,7 @@ import java.util.Queue;
 import java.util.Timer;
 import java.util.TimerTask;
 
-import objects.Plane;
+import externalObjects.Plane;
 import tcas.TCAS; 
 
 public class OnProgramming {
@@ -12,6 +12,7 @@ public class OnProgramming {
     public static void main(String[] args) {
     	Plane localPlane = new Plane(3, 500); //notre avion
         final Queue<Plane> environmentPlanes = new LinkedList<Plane>(); //avions autours de notre avion
+    	TCAS tcas = new TCAS(environmentPlanes, localPlane);
 
         Timer timer = new Timer();
 
@@ -23,7 +24,6 @@ public class OnProgramming {
     	environmentPlanes.add(plane2); 
     	environmentPlanes.add(plane3); 
     	
-    	TCAS tcas = new TCAS(environmentPlanes, localPlane);
     	//lancement du TCAS
         timer.schedule(tcas, 0, 5000);  //écoute chaque seconde
     }
