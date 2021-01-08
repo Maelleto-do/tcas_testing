@@ -17,7 +17,7 @@ public class TCAS extends TimerTask {
 	private TCASDisplayer tcasRendering; 
 	private Queue<Plane> detectedPlanes = new LinkedList<Plane>(); 
     private Queue<Plane> environmentPlanes = new LinkedList<Plane>(); 
-    public static Plane localPlane; 
+    public static  Plane localPlane; 
     
     
     public TCAS(Queue<Plane> environmentPlanes, Plane localPlane) {
@@ -47,15 +47,15 @@ public class TCAS extends TimerTask {
         	Plane detectedPlane = detectedPlanes.remove();
 
         	//Intruder zone
-        	if ( Math.abs(detectedPlane.getX() - localPlane.getX()) < 6 &&  Math.abs(detectedPlane.getY() - localPlane.getY()) < 1200 ) {
+        	if ( detectedPlane.getX() - localPlane.getX() < 6 &&  Math.abs(detectedPlane.getY() - localPlane.getY()) < 1200 ) {
         		this.intruder_alert(); 
         	}
         	//TA zone
-        	if (  Math.abs(detectedPlane.getX() - localPlane.getX()) < 3.3 &&  Math.abs(detectedPlane.getY() - localPlane.getY()) < 850 ) {
+        	if ( detectedPlane.getX() - localPlane.getX() < 3.3 &&  Math.abs(detectedPlane.getY() - localPlane.getY()) < 850 ) {
         		this.ta_alert(); 
         	}
         	//RA zone
-        	if (  Math.abs(detectedPlane.getX() - localPlane.getX()) < 2.1 &&  Math.abs(detectedPlane.getY() - localPlane.getY()) < 600 ) {
+        	if ( detectedPlane.getX() - localPlane.getX() < 2.1 &&  Math.abs(detectedPlane.getY() - localPlane.getY()) < 600 ) {
         		this.ra_alert(detectedPlane); 
         	}	
     	}
